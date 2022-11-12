@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>索引</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script>
+    <![endif]-->
+    <script src="{{ url_for('static', filename='js/ie-emulation-modes-warning.js') }}"></script>
+    <!--[if lt IE 9]>
+    <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <div class="form-inline" align="center">
+        <form method="post" action="/" enctype="application/x-www-form-urlencoded" class="form-group" role="form">
+            <div class="form-group">
+                <input type="search" class="form-control" name="code" placeholder="这里搜索指定代号的代码">
+                <input type="submit" class="btn btn-sm btn-info form-control" value="搜索">
+            </div>
+        </form>
+        <form method="post" action="/upload" enctype="multipart/form-data" class="form-group" role="form">
+            <div class="form-group">
+                <input type="file" id="file" name="file" class="form-control form-control-file" multiple="multiple"
+                       accept=".zip,.rar,.jpeg,.jpg,.png,.bmp,.gif,.txt"
+                       style="display: none"
+                       onchange="document.onchange(this);" contentEditable="false"
+                       required>
+                <button class="btn btn-sm btn-primary form-control" onclick="document.getElementById('file').click()">选择文件</button>
+                <input type="submit" class="btn btn-sm btn-warning form-control" value="上传">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    {% if file_list %}
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped" role="table">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;">时间序</th>
+                        <th style="text-align: center;">上传人代号</th>
+                        <th style="text-align: center;">上传文件名</th>
+                        <th style="text-align: center;">上传时间</th>
+                        <th style="text-align: center;">文件操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for file in file_list %}
+                        <tr>
+                            <td style="text-align: center;">{{ loop.index }}</td>
+                            <td style="text-align: center;">{{ file.get_file_information()[0] }}</td>
+                            <td style="text-align: center;">{{ file.get_file_information()[3] }}</td>
+                            <td style="text-align: center;">{{ file.get_file_information()[2] }}</td>
+                            <td style="text-align: center;">
+                                <a class="btn btn-primary btn-xs" href="/{{ file.get_file_information()[1] }}">下载
+                                </a>
+                                {% if file.get_file_information()[0] == code %}
+                                    <a class="btn btn-danger btn-xs"
+                                       href="/delete/{{ file.get_file_information()[1] }}">删除</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            <div style="text-align: center;"><strong>Oops!</strong> 文件列表为空,貌似这一区域还没有人留下痕迹?</div>
+        </div>
+    {% endif %}
+</div>
+<script src="{{ url_for('static', filename='js/ie10-viewport-bug-workaround.js') }}"></script>
+</body>
+</html>

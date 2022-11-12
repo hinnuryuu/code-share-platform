@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>身份验证</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{{ url_for('static', filename='js/ie8-responsive-file-warning.js') }}"></script>
+    <![endif]-->
+    <script src="{{ url_for('static', filename='js/ie-emulation-modes-warning.js') }}"></script>
+    <!--[if lt IE 9]>
+    <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="/login" method="post">
+        <h2 class="form-signin-heading">It's showtime!</h2>
+        <input type="text" name="code" class="form-control" placeholder="代号?" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="口令!" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Showtime!</button>
+    </form>
+</div>
+<script src="{{ url_for('static', filename='js/ie10-viewport-bug-workaround.js') }}"></script>
+</body>
+</html>
